@@ -1,0 +1,629 @@
+<!doctype html>
+
+<html
+	class="light"
+	lang="ru"
+>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			content="width=device-width, initial-scale=1.0"
+			name="viewport"
+		/>
+		<title>ZenAccounting - Бухгалтерия для ИП</title>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+			rel="stylesheet"
+		/>
+		<script id="tailwind-config">
+			tailwind.config = {
+				darkMode: 'class',
+				theme: {
+					extend: {
+						colors: {
+							'outline-variant': '#cfc6ab',
+							'inverse-surface': '#313030',
+							'tertiary-container': '#ffd1ca',
+							'on-secondary-fixed': '#2f1500',
+							'on-secondary-fixed-variant': '#6e3900',
+							'tertiary-fixed': '#ffdad4',
+							'surface-container-highest': '#e5e2e1',
+							'on-tertiary-container': '#b7281b',
+							'on-error': '#ffffff',
+							'primary-container': '#feda00',
+							tertiary: '#b52619',
+							outline: '#7e775f',
+							'on-secondary-container': '#603100',
+							'inverse-primary': '#e6c500',
+							error: '#ba1a1a',
+							'on-primary-fixed-variant': '#534600',
+							'on-primary': '#ffffff',
+							'on-error-container': '#93000a',
+							'surface-container-low': '#f6f3f2',
+							'on-primary-container': '#705f00',
+							'secondary-fixed': '#ffdcc3',
+							'secondary-fixed-dim': '#ffb77d',
+							'on-tertiary': '#ffffff',
+							'surface-tint': '#6e5e00',
+							background: '#fcf9f8',
+							'surface-container-lowest': '#ffffff',
+							'on-primary-fixed': '#221b00',
+							'surface-container': '#f0eded',
+							'secondary-container': '#fd8b00',
+							surface: '#fcf9f8',
+							'on-surface-variant': '#4c4732',
+							'error-container': '#ffdad6',
+							'inverse-on-surface': '#f3f0ef',
+							'tertiary-fixed-dim': '#ffb4a8',
+							'surface-container-high': '#eae7e7',
+							'surface-bright': '#fcf9f8',
+							'primary-fixed': '#ffe25c',
+							'surface-dim': '#dcd9d9',
+							'on-background': '#1c1b1b',
+							'on-surface': '#1c1b1b',
+							'on-tertiary-fixed-variant': '#920703',
+							'on-tertiary-fixed': '#410000',
+							'primary-fixed-dim': '#e6c500',
+							primary: '#8b0000',
+							secondary: '#904d00',
+							'on-secondary': '#ffffff'
+						},
+						borderRadius: {
+							DEFAULT: '0.25rem',
+							lg: '0.5rem',
+							xl: '0.75rem',
+							full: '9999px'
+						},
+						spacing: {
+							'section-gap': '80px',
+							'card-padding': '24px',
+							'container-margin-mobile': '16px',
+							'container-margin-desktop': '64px',
+							gutter: '24px',
+							base: '8px'
+						},
+						fontFamily: {
+							'display-lg': ['Manrope'],
+							'label-caps': ['Manrope'],
+							'body-sm': ['Manrope'],
+							'body-lg': ['Manrope'],
+							'headline-md': ['Manrope'],
+							'headline-sm': ['Manrope'],
+							'body-md': ['Manrope']
+						},
+						fontSize: {
+							'display-lg': [
+								'48px',
+								{
+									lineHeight: '1.1',
+									letterSpacing: '-0.02em',
+									fontWeight: '800'
+								}
+							],
+							'label-caps': [
+								'12px',
+								{
+									lineHeight: '1.4',
+									letterSpacing: '0.05em',
+									fontWeight: '700'
+								}
+							],
+							'body-sm': ['14px', { lineHeight: '1.5', fontWeight: '400' }],
+							'body-lg': ['18px', { lineHeight: '1.6', fontWeight: '400' }],
+							'headline-md': [
+								'32px',
+								{ lineHeight: '1.25', fontWeight: '700' }
+							],
+							'headline-sm': ['24px', { lineHeight: '1.3', fontWeight: '700' }],
+							'body-md': ['16px', { lineHeight: '1.6', fontWeight: '400' }]
+						}
+					}
+				}
+			}
+		</script>
+		<style>
+			.glass-card {
+				background: rgba(255, 255, 255, 0.85);
+				backdrop-filter: blur(20px);
+				border: 1px solid rgba(139, 0, 0, 0.1);
+				box-shadow: 0 4px 20px -2px rgba(139, 0, 0, 0.08);
+			}
+			.organic-gradient-bg {
+				background:
+					radial-gradient(
+						circle at 10% 20%,
+						rgba(254, 218, 0, 0.08) 0%,
+						transparent 40%
+					),
+					radial-gradient(
+						circle at 90% 80%,
+						rgba(139, 0, 0, 0.05) 0%,
+						transparent 40%
+					);
+			}
+		</style>
+	</head>
+	<body
+		class="bg-background organic-gradient-bg text-on-background min-h-screen font-body-md overflow-x-hidden"
+	>
+		<!-- Navigation -->
+		<nav
+			class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/30 px-container-margin-desktop h-20 flex items-center justify-between"
+		>
+			<div class="flex items-center gap-2">
+				<h1 class="font-headline-sm text-headline-sm font-bold text-primary">
+					ZenAccounting
+				</h1>
+			</div>
+			<div class="hidden md:flex items-center gap-8">
+				<a
+					class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+					href="#benefits"
+				>
+					Что включено
+				</a>
+				<a
+					class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors"
+					href="#calculator"
+				>
+					Калькулятор
+				</a>
+				<button
+					class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-bold hover:brightness-110 transition-all text-sm shadow-md shadow-primary/20"
+				>
+					Личный кабинет
+				</button>
+			</div>
+		</nav>
+		<!-- Block 1: Hero Section -->
+		<section
+			class="relative pt-32 pb-20 px-container-margin-desktop min-h-[85vh] flex items-center"
+		>
+			<div
+				class="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+			>
+				<div class="lg:col-span-7 flex flex-col gap-6">
+					<h2 class="font-display-lg text-display-lg text-on-surface">
+						Бухгалтерия для ИП под ключ: ведем учёт, сдаём отчёты, консультируем
+					</h2>
+					<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+						Опытные бухгалтеры. Гарантия соблюдения сроков. Работаем онлайн по
+						всей России.
+					</p>
+					<!-- Lead Form -->
+					<div
+						class="glass-card rounded-2xl p-6 mt-4 max-w-xl border-primary/20"
+					>
+						<form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div class="flex flex-col gap-1.5">
+								<label
+									class="font-label-caps text-[10px] text-on-surface-variant px-1 uppercase tracking-wider"
+								>
+									Ваше имя
+								</label>
+								<input
+									class="bg-surface-container-lowest border-outline-variant/50 rounded-xl px-4 py-3 focus:ring-2 focus:ring-secondary-container focus:border-transparent transition-all outline-none"
+									placeholder="Иван Иванов"
+									type="text"
+								/>
+							</div>
+							<div class="flex flex-col gap-1.5">
+								<label
+									class="font-label-caps text-[10px] text-on-surface-variant px-1 uppercase tracking-wider"
+								>
+									Телефон
+								</label>
+								<input
+									class="bg-surface-container-lowest border-outline-variant/50 rounded-xl px-4 py-3 focus:ring-2 focus:ring-secondary-container focus:border-transparent transition-all outline-none"
+									placeholder="+7 (999) 000-00-00"
+									type="tel"
+								/>
+							</div>
+							<div class="md:col-span-2 flex flex-col gap-1.5">
+								<label
+									class="font-label-caps text-[10px] text-on-surface-variant px-1 uppercase tracking-wider"
+								>
+									Система налогообложения
+								</label>
+								<select
+									class="bg-surface-container-lowest border-outline-variant/50 rounded-xl px-4 py-3 focus:ring-2 focus:ring-secondary-container focus:border-transparent transition-all outline-none appearance-none"
+								>
+									<option>УСН (Доходы)</option>
+									<option>УСН (Доходы минус расходы)</option>
+									<option>Патент</option>
+									<option>ОСНО</option>
+									<option>НПД (Самозанятость)</option>
+								</select>
+							</div>
+							<button
+								class="md:col-span-2 bg-primary text-on-primary font-bold py-4 rounded-xl hover:shadow-xl hover:shadow-primary/30 transition-all text-body-md mt-2"
+								type="submit"
+							>
+								Рассчитать стоимость и получить консультацию
+							</button>
+						</form>
+					</div>
+				</div>
+				<div class="lg:col-span-5 relative">
+					<div
+						class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500"
+					>
+						<img
+							alt="Professional accounting workspace"
+							class="w-full h-[500px] object-cover"
+							src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL2ubD0EwVCgls_2VVS0d2yRbgO9TFSwQT6VDMIO--mlOubYqo2omz9NagwCY2GCWPJdvAAHqjf56T0DtewiKliq4ZhaXgfEqyKA58CCIvhWqOyx3oOKSOpfacvtX1lkz6hS1tZEWGF34cdCh_aDZSw-3A6KjN5zp35Ujkmi6pOqNk2fJQe-Y-2lvIVhwMpe1M4q9k2Dj-1Xd03QigP8QZHuRlT7ndJtoVwYkyLLurYAK3no9uScSKx19y7i-nxUv5LCkrEmSuX5w"
+						/>
+						<div
+							class="absolute inset-0 bg-primary/20 mix-blend-multiply"
+						></div>
+					</div>
+					<!-- Decorative elements -->
+					<div
+						class="absolute -top-6 -right-6 w-32 h-32 bg-primary-container/40 rounded-full blur-3xl"
+					></div>
+					<div
+						class="absolute -bottom-10 -left-10 w-48 h-48 bg-secondary-container/30 rounded-full blur-3xl"
+					></div>
+				</div>
+			</div>
+		</section>
+		<!-- Block 2: "What's Included" (Benefits) -->
+		<section
+			class="py-section-gap px-container-margin-desktop bg-surface-container-lowest/50"
+			id="benefits"
+		>
+			<div class="container mx-auto">
+				<div class="flex flex-col items-center text-center mb-16">
+					<span
+						class="font-label-caps text-label-caps text-primary bg-primary-container/30 px-4 py-1.5 rounded-full mb-4"
+					>
+						Наши услуги
+					</span>
+					<h2 class="font-headline-md text-headline-md text-on-surface">
+						Что входит в бухгалтерское сопровождение
+					</h2>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+					<!-- Benefit 1 -->
+					<div
+						class="glass-card p-card-padding rounded-2xl hover:-translate-y-2 transition-all duration-300 group"
+					>
+						<div
+							class="w-12 h-12 bg-secondary-container/20 text-secondary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors"
+						>
+							<span class="material-symbols-outlined">
+								account_balance_wallet
+							</span>
+						</div>
+						<h3 class="font-headline-sm text-lg mb-3">
+							Ведение бухгалтерского и налогового учёта
+						</h3>
+						<p class="text-on-surface-variant text-body-sm">
+							Полный контроль ваших финансов в соответствии с актуальным
+							законодательством.
+						</p>
+					</div>
+					<!-- Benefit 2 -->
+					<div
+						class="glass-card p-card-padding rounded-2xl hover:-translate-y-2 transition-all duration-300 group"
+					>
+						<div
+							class="w-12 h-12 bg-secondary-container/20 text-secondary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors"
+						>
+							<span class="material-symbols-outlined">description</span>
+						</div>
+						<h3 class="font-headline-sm text-lg mb-3">
+							Подготовка и сдача отчётности в ФНС, СФР
+						</h3>
+						<p class="text-on-surface-variant text-body-sm">
+							Гарантируем сдачу всех деклараций вовремя. Без штрафов и
+							блокировок счетов.
+						</p>
+					</div>
+					<!-- Benefit 3 -->
+					<div
+						class="glass-card p-card-padding rounded-2xl hover:-translate-y-2 transition-all duration-300 group"
+					>
+						<div
+							class="w-12 h-12 bg-secondary-container/20 text-secondary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors"
+						>
+							<span class="material-symbols-outlined">payments</span>
+						</div>
+						<h3 class="font-headline-sm text-lg mb-3">
+							Расчёт налогов и взносов
+						</h3>
+						<p class="text-on-surface-variant text-body-sm">
+							Оптимизируем налоговую нагрузку и рассчитываем платежи с точностью
+							до копейки.
+						</p>
+					</div>
+					<!-- Benefit 4 -->
+					<div
+						class="glass-card p-card-padding rounded-2xl hover:-translate-y-2 transition-all duration-300 group"
+					>
+						<div
+							class="w-12 h-12 bg-secondary-container/20 text-secondary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors"
+						>
+							<span class="material-symbols-outlined">forum</span>
+						</div>
+						<h3 class="font-headline-sm text-lg mb-3">
+							Консультации по выбору системы налогообложения
+						</h3>
+						<p class="text-on-surface-variant text-body-sm">
+							Поможем выбрать самый выгодный режим: УСН, Патент или ОСНО.
+						</p>
+					</div>
+					<!-- Benefit 5 -->
+					<div
+						class="glass-card p-card-padding rounded-2xl hover:-translate-y-2 transition-all duration-300 group"
+					>
+						<div
+							class="w-12 h-12 bg-secondary-container/20 text-secondary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors"
+						>
+							<span class="material-symbols-outlined">receipt_long</span>
+						</div>
+						<h3 class="font-headline-sm text-lg mb-3">
+							Работа с первичными документами
+						</h3>
+						<p class="text-on-surface-variant text-body-sm">
+							Проверка корректности счетов, актов и накладных от ваших
+							контрагентов.
+						</p>
+					</div>
+					<!-- Benefit 6 (CTA card) -->
+					<div
+						class="glass-card p-card-padding rounded-2xl bg-primary text-on-primary flex flex-col justify-center items-center text-center border-none shadow-xl shadow-primary/20"
+					>
+						<h3 class="font-headline-sm mb-4">Нужна помощь прямо сейчас?</h3>
+						<button
+							class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold hover:brightness-110 transition-colors text-sm"
+						>
+							Связаться с нами
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Block 3: Interactive Calculator -->
+		<section
+			class="py-section-gap px-container-margin-desktop"
+			id="calculator"
+		>
+			<div class="container mx-auto">
+				<div
+					class="glass-card rounded-3xl p-8 lg:p-12 max-w-4xl mx-auto shadow-2xl relative overflow-hidden"
+				>
+					<!-- Background glows -->
+					<div
+						class="absolute -top-24 -right-24 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl"
+					></div>
+					<div
+						class="absolute -bottom-24 -left-24 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl"
+					></div>
+					<div class="relative z-10 flex flex-col gap-10">
+						<div class="text-center lg:text-left">
+							<h2
+								class="font-headline-md text-headline-md text-on-surface mb-2"
+							>
+								Рассчитайте стоимость обслуживания
+							</h2>
+							<p class="text-on-surface-variant">
+								Выберите параметры вашего бизнеса для точного расчета
+							</p>
+						</div>
+						<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+							<div class="flex flex-col gap-8">
+								<!-- Taxation System Input -->
+								<div>
+									<h4
+										class="font-label-caps text-label-caps text-on-surface mb-4"
+									>
+										Система налогообложения
+									</h4>
+									<div class="grid grid-cols-2 gap-3">
+										<label class="relative cursor-pointer">
+											<input
+												checked=""
+												class="peer sr-only"
+												name="tax_system"
+												type="radio"
+												value="usn6"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												УСН (6%)
+											</div>
+										</label>
+										<label class="relative cursor-pointer">
+											<input
+												class="peer sr-only"
+												name="tax_system"
+												type="radio"
+												value="usn15"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												УСН (15%)
+											</div>
+										</label>
+										<label class="relative cursor-pointer">
+											<input
+												class="peer sr-only"
+												name="tax_system"
+												type="radio"
+												value="patent"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												Патент
+											</div>
+										</label>
+										<label class="relative cursor-pointer">
+											<input
+												class="peer sr-only"
+												name="tax_system"
+												type="radio"
+												value="osno"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												ОСНО
+											</div>
+										</label>
+									</div>
+								</div>
+								<!-- Transactions Input -->
+								<div>
+									<h4
+										class="font-label-caps text-label-caps text-on-surface mb-4"
+									>
+										Количество операций в месяц
+									</h4>
+									<div class="grid grid-cols-3 gap-3">
+										<label class="relative cursor-pointer">
+											<input
+												checked=""
+												class="peer sr-only"
+												name="transactions"
+												type="radio"
+												value="10"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												До 10
+											</div>
+										</label>
+										<label class="relative cursor-pointer">
+											<input
+												class="peer sr-only"
+												name="transactions"
+												type="radio"
+												value="50"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												10–50
+											</div>
+										</label>
+										<label class="relative cursor-pointer">
+											<input
+												class="peer sr-only"
+												name="transactions"
+												type="radio"
+												value="more"
+											/>
+											<div
+												class="p-3 text-center rounded-xl border border-outline-variant/50 bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary-container/20 peer-checked:text-primary transition-all font-label-caps text-[11px]"
+											>
+												Более 50
+											</div>
+										</label>
+									</div>
+								</div>
+							</div>
+							<!-- Result Display -->
+							<div
+								class="bg-primary text-on-primary rounded-2xl p-8 flex flex-col justify-center items-center text-center shadow-lg shadow-primary/20"
+							>
+								<p
+									class="font-label-caps text-label-caps opacity-80 mb-2 uppercase tracking-widest"
+								>
+									Ориентировочная стоимость:
+								</p>
+								<h4
+									class="font-display-lg text-display-lg mb-6"
+									id="calc-result"
+								>
+									от 5 000 руб./мес
+								</h4>
+								<button
+									class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-xl hover:brightness-110 transition-all text-body-md shadow-md"
+								>
+									Оставить заявку
+								</button>
+								<p class="text-[10px] opacity-70 mt-4 font-medium italic">
+									Точная стоимость зависит от сложности учета и наличия
+									сотрудников
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Footer -->
+		<footer
+			class="w-full py-12 px-container-margin-desktop flex flex-col md:flex-row justify-between items-center gap-8 bg-surface border-t border-outline-variant/20 mt-12"
+		>
+			<div class="flex flex-col gap-2 items-center md:items-start">
+				<h2 class="font-headline-sm text-primary font-bold">ZenAccounting</h2>
+				<span
+					class="font-label-caps text-[10px] text-on-surface-variant uppercase"
+				>
+					© 2026 ZenAccounting. Все права защищены.
+				</span>
+			</div>
+			<div class="flex flex-wrap justify-center gap-8">
+				<a
+					class="text-on-surface-variant font-label-caps text-[11px] hover:text-primary transition-colors"
+					href="#"
+				>
+					Политика конфиденциальности
+				</a>
+				<a
+					class="text-on-surface-variant font-label-caps text-[11px] hover:text-primary transition-colors"
+					href="#"
+				>
+					Условия использования
+				</a>
+				<a
+					class="text-on-surface-variant font-label-caps text-[11px] hover:text-primary transition-colors"
+					href="#"
+				>
+					Контакты
+				</a>
+			</div>
+		</footer>
+		<script>
+			// Simple Calculator Logic
+			const resultEl = document.getElementById('calc-result')
+			const taxRadios = document.querySelectorAll('input[name="tax_system"]')
+			const transRadios = document.querySelectorAll(
+				'input[name="transactions"]'
+			)
+
+			function updatePrice() {
+				let basePrice = 5000
+				const tax = document.querySelector(
+					'input[name="tax_system"]:checked'
+				).value
+				const trans = document.querySelector(
+					'input[name="transactions"]:checked'
+				).value
+
+				if (tax === 'usn15') basePrice += 3000
+				if (tax === 'osno') basePrice += 10000
+				if (tax === 'patent') basePrice -= 1000
+
+				if (trans === '50') basePrice += 4000
+				if (trans === 'more') basePrice += 12000
+
+				resultEl.innerText = `от ${basePrice.toLocaleString()} руб./мес`
+			}
+
+			taxRadios.forEach(r => r.addEventListener('change', updatePrice))
+			transRadios.forEach(r => r.addEventListener('change', updatePrice))
+		</script>
+	</body>
+</html>
